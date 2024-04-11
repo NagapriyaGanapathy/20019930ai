@@ -1,3 +1,9 @@
+import requests
+from bs4 import BeautifulSoup
+import re
+from tabulate import tabulate
+from pymongo import MongoClient
+
 def scrape_bbc_news(url):
   response=requests.get(url)
   if response.status_code==200:
