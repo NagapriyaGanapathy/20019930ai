@@ -13,12 +13,12 @@ def scrape_bbc_news(url):
   response=requests.get(url)
   if response.status_code==200:
      soup=BeautifulSoup(response.content,'html.parser')
-     #print(soup)
+     
      hotnews_headlines =[]
      hotnews_descriptions=[]
      hotnews_word_counts=[]
      hot_news = soup.find_all('div',class_="sc-adfaf101-3 hHYUcg")
-     #print(hot_news)
+     
      for news in hot_news:
          
          headline = news.find('h2', {'data-testid':'card-headline'}).text.strip()
@@ -73,7 +73,7 @@ hotnews_data=[["Headline","Description","Wordcount"]]
 if hotnews_headlines and hotnews_descriptions and hotnews_word_counts:
   for headline, description, word_count in zip(hotnews_headlines, hotnews_descriptions,hotnews_word_counts):
       hotnews_data.append([headline, description, word_count])
-print(tabulate(hotnews_data, headers="firstrow"))
+#print(tabulate(hotnews_data, headers="firstrow"))
 
 
 def mongodb_connection():
@@ -84,15 +84,11 @@ def mongodb_connection():
 def insert_Data(data):
   table = mongodb_connection()
   table.insert_many(data)
-def fetch_Data(data):
-  table_data=mongodb_connection()
-  final_Data = list(table_data.find({},{'_id':0}))
-  return final_Data
 def create_and_populate_db():
   url="https://www.bbc.com/business"
   news_Table= scrape_bbc_news(url)
   print(hotnews_data,"************")
-  insert_Data=(news_Table)
+  insert_Data(news_Table)
 create_and_populate_db()
 #if__name__=="__main__":
  
