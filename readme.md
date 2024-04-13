@@ -26,12 +26,12 @@ Here, the scraped data were cleaned before storing into the Database,
 * .lower() converts strings into lowercase for consistency in Queries & avoid duplicate entries
 * regular expression [^a-zA-Z\s] matches any character that is not a letter or whitespace.
 * regular expression [http\S+] matches any substring that start with "http"
-
-  # step 3: MongoDB Storage:
-  * The preprocessed data is saved in a MongoDB database called "bbcnews"
-  * The news data information is stored in a database connection "hotnews_collection"
-  * Function mongodb_connection() makes connection to MongoDB instance
-  * insert_Data() inserting the data into MongoDB collection
+*
+# step 3: MongoDB Storage:
+* The preprocessed data is saved in a MongoDB database called "bbcnews"
+* The news data information is stored in a database connection "hotnews_collection"
+* Function mongodb_connection() makes connection to MongoDB instance
+* insert_Data() inserting the data into MongoDB collection
 
 
 
