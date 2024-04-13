@@ -1,9 +1,13 @@
 # CA 2 PROGRAMMING
 # WEB SCRAPING PROJECT
 **Module Title:**  Programming for Data Analysis
+
 **Module Code:** B9AI108
+
 **Module leader:** Paul Laird
+
 **Student Name:** Nagapriya Ganapathy
+
 **Student ID:** 20019930
 
 ## BBC NEWS - DATA PIPELINE
