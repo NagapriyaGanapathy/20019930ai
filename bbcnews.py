@@ -1,18 +1,3 @@
-import requests
-from bs4 import BeautifulSoup
-import re
-from tabulate import tabulate
-from pymongo import MongoClient
-from nltk.corpus import stopwords
-from nltk.tokenize import word_tokenize
-from spellchecker import SpellChecker
-from datetime import datetime
-from flask import Flask, jsonify
-
-import nltk
-nltk.download('punkt')
-nltk.download('stopwords')
-
 ## Scraping data from BBC news website using scrape_bbc_news() method.
 def scrape_bbc_news(url):
   response=requests.get(url)
@@ -105,7 +90,7 @@ def mongodb_connection():
   return connection
 def insert_Data(data):
   table = mongodb_connection()
-  #table.insert_many(data)
+  table.insert_many(data)
 def fetch_datetime():
   url=""
   response =requests.post(url)
@@ -115,9 +100,24 @@ def fetch_datetime():
 
 def create_and_populate_db():
   url="https://www.bbc.com/business"
-  news_Table= scrape_bbc_news(url)
-  print(news_Table,"************")
-  #insert_Data(news_Table)
+  hotnews_headlines, hotnews_descriptions, hotnews_description_counts,hotnews_tag,date_time=scrape_bbc_news(url)
+
+  news_data=[]
+  for headline, description, word_count,tag,date_time in zip(hotnews_headlines, hotnews_descriptions,hotnews_description_counts,hotnews_tag,date_time):
+    news_data.append({
+        "headline":headline,
+        "description":description,
+        "word_count":word_count,
+        "tag":tag,
+        "date_time":date_time
+
+    })
+  if news_data:
+    insert_Data(news_data)
+    print("Data inserted into MongoDB successfully")
+  else:
+    print("No data inserted")
+  
 create_and_populate_db()
 #if__name__=="__main__":
 
