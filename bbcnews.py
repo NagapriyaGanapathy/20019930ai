@@ -7,7 +7,6 @@ from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 from spellchecker import SpellChecker
 from datetime import datetime
-from flask import Flask, jsonify
 import pytz
 import nltk
 nltk.download('punkt')
@@ -25,7 +24,6 @@ def scrape_bbc_news(url):
      hotnews_tag=[]
 
      hot_news = soup.find_all('div',class_="sc-adfaf101-3 hHYUcg")
-     #hot_news = soup.find_all('div',class_="sc-22e6e77d-2 jEcfdb")
      current_time=datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
      for news in hot_news:
@@ -62,15 +60,10 @@ def preprocess_text(text):
       return None
 
   text = text.lower()
-
   text = re.sub(r'http\S+','',text)
   text = re.sub(r'[^a-zA-Z\s]','',text)
-
-
   tokens=word_tokenize(text)
-
   tokens=[word for word in tokens if word.isalpha()]
-
   stop_words=set(stopwords.words('english'))
   tokens=[word for word in tokens if word not in stop_words]
 
@@ -104,14 +97,12 @@ def mongodb_connection():
   connection= db['hotnews_collection']
   return connection
 def insert_Data(data):
-  table = mongodb_connection()
-  table.insert_many(data)
-def fetch_datetime():
-  url=""
-  response =requests.post(url)
-  if response.status_code ==200:
-    data=response.json
-    return data.get("datetime")
+  try:
+     table = mongodb_connection()
+     table.insert_many(data)
+     print("Data inserted")
+  except Exception as e:
+     print(e)
 
 def create_and_populate_db():
   url="https://www.bbc.com/business"
@@ -136,14 +127,5 @@ def create_and_populate_db():
 create_and_populate_db()
 #if__name__=="__main__":
 
-app = Flask(__name__)
-@app.route('/datetime',methods=['post'])
-def get_datetime():
-  now=datetime.now()
-  current_time=now.strftime("%Y-%m-%d %H:%M:%S")
-  return jsonify({"datetime":current_time})
-
-  if __name__ == '__main__':
-    app.run(debug=True)
 
                  
