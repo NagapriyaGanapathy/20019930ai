@@ -118,11 +118,17 @@ def create_and_populate_db():
         "date_time":date_time
 
     })
-  if news_data:
-    insert_Data(news_data)
-    print("Data inserted into MongoDB successfully")
+  existing_data=list(mongodb_connection().find({},{"headline":1,"_id":0}))
+  unique_news_data=[]
+  for data in news_data:
+    if data["headline"]not in [existing["headline"]for existing in existing_data]:
+      unique_news_data.append(data)
+  
+  if unique_news_data:
+    insert_Data(unique_news_data)
+    print("Unique Data inserted into MongoDB successfully")
   else:
-    print("No data inserted")
+    print("No unique data inserted")
   
 create_and_populate_db()
 #if__name__=="__main__":
