@@ -26,12 +26,15 @@ Here, the scraped data were cleaned before storing into the Database,
 * .lower() converts strings into lowercase for consistency in Queries & avoid duplicate entries
 * regular expression [^a-zA-Z\s] matches any character that is not a letter or whitespace.
 * regular expression [http\S+] matches any substring that start with "http"
-*
+* word_tokenize() function from the NTLK library to tokenizes the text into words.
+* stop_words remove stop words from the list of tokens.
+* SpellChecker() from the pyspellchecker library to correct spelling mistakes in the tokens.
 # step 3: MongoDB Storage:
 * The preprocessed data is saved in a MongoDB database called "bbcnews"
 * The news data information is stored in a database connection "hotnews_collection"
-* Function mongodb_connection() makes connection to MongoDB instance
-* insert_Data() inserting the data into MongoDB collection
+* Function mongodb_connection() makes connection to MongoDB instance.
+* insert_Data() inserting the data into MongoDB collection.
+* create_and_populate_db() function scrapes news data from the BBC Business section using the scrape_bbc_news() and structures the scraped data into a list of dictionaries.
 
 
 
