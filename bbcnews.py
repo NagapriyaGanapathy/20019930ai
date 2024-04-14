@@ -1,3 +1,18 @@
+import requests
+from bs4 import BeautifulSoup
+import re
+from tabulate import tabulate
+from pymongo import MongoClient
+from nltk.corpus import stopwords
+from nltk.tokenize import word_tokenize
+from spellchecker import SpellChecker
+from datetime import datetime
+from flask import Flask, jsonify
+import pytz
+import nltk
+nltk.download('punkt')
+nltk.download('stopwords')
+
 ## Scraping data from BBC news website using scrape_bbc_news() method.
 def scrape_bbc_news(url):
   response=requests.get(url)
