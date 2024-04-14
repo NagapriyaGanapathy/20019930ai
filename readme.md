@@ -12,7 +12,7 @@
 
 ## BBC NEWS - DATA PIPELINE
 # Project Overview :
-The main goal of the project appears to be to gather news data from the BBC Business section,process the text to remove noise ,and store the cleaned data in a MongoDB database for futher analysis.
+The main goal of the project appears to be to gather news data from the BBC Business section,process the text to remove noise ,and store the cleaned data in a MongoDB database for futher analysis and checking the uniqueness of the data scraped.
 
 # KEY FEATURES :
 # Step 1: Web Scraping
